@@ -99,8 +99,8 @@
         <section id="hero" class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div>
-                    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-black mb-4">Hi, I'm <span class="text-indigo-600 dark:text-Navy Blue-400">Erickson D.Ayenza</span></h1>
-                    <h2 class="text-2xl md:text-3xl font-semibold text-gray-700 dark:text-black-300 mb-6">Full Stack Developer</h2>
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-black mb-4">Hi, I'm <span class="text-indigo-600 dark:text-indigo-400">Erickson D.Ayenza</span></h1>
+                    <h2 class="text-2xl md:text-3xl font-semibold text-gray-700 dark:text-gray-400 mb-6">Full Stack Developer</h2>
                     <p class="text-gray-600 dark:text-gray-400 mb-8 max-w-lg">
                         I build scalable web applications with modern technologies. Passionate about creating efficient, intuitive, and visually appealing digital experiences.
                     </p>
@@ -117,6 +117,9 @@
                     <div class="relative">
                         <img src="Esonn.jpg.jpg" alt="Professional portrait of Erickson Developer
                         with modern office background" class="rounded-full w-64 h-64 md:w-80 md:h-80 object-cover border-4 border-indigo-100 dark:border-indigo-900 shadow-lg">
+                        <button id="badgeButton" type="button" class="absolute -top-4 -left-4 w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-4 border-white dark:border-gray-900 bg-indigo-100 dark:bg-indigo-900 shadow-lg cursor-zoom-in focus:outline-none focus:ring-4 focus:ring-indigo-300" aria-label="View badge image">
+                            <img src="github.png" alt="Professional badge" class="w-full h-full object-cover">
+                        </button>
                         <div class="absolute -bottom-4 -right-4 bg-indigo-600 text-white px-4 py-2 rounded-lg shadow-md">
                             <span class="font-medium">Open to work</span>
                         </div>
@@ -758,6 +761,15 @@
             </div>
         </div>
     </footer>
+
+    <!-- Badge image close-up -->
+    <div id="badgeModal" class="hidden fixed inset-0 z-50 items-center justify-center bg-black/75 p-4" role="dialog" aria-modal="true" aria-labelledby="badgeModalTitle">
+        <div class="relative max-w-3xl max-h-[90vh]">
+            <h2 id="badgeModalTitle" class="sr-only">Badge image close-up</h2>
+            <img src="github.png" alt="Professional badge enlarged" class="max-w-full max-h-[85vh] rounded-full object-contain shadow-2xl">
+            <button id="closeBadgeModal" type="button" class="absolute -top-3 -right-3 w-10 h-10 rounded-full bg-white text-gray-900 text-2xl leading-none shadow-lg hover:bg-gray-200 focus:outline-none focus:ring-4 focus:ring-indigo-300" aria-label="Close badge image">&times;</button>
+        </div>
+    </div>
     
     <script>
         // Dark mode toggle functionality
@@ -766,6 +778,9 @@
         const mobileMenuButton = document.getElementById('mobileMenuButton');
         const mobileMenu = document.getElementById('mobileMenu');
         const contactForm = document.getElementById('contactForm');
+        const badgeButton = document.getElementById('badgeButton');
+        const badgeModal = document.getElementById('badgeModal');
+        const closeBadgeModal = document.getElementById('closeBadgeModal');
         
         // Check for saved theme preference or use system preference
         const currentTheme = localStorage.getItem('theme') || 
@@ -789,6 +804,33 @@
         // Mobile menu toggle
         mobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
+        });
+
+        // Badge image close-up
+        const closeBadgeImage = () => {
+            badgeModal.classList.add('hidden');
+            badgeModal.classList.remove('flex');
+        };
+
+        badgeButton.addEventListener('click', () => {
+            badgeModal.classList.remove('hidden');
+            badgeModal.classList.add('flex');
+            closeBadgeModal.focus();
+        });
+
+        closeBadgeModal.addEventListener('click', closeBadgeImage);
+
+        badgeModal.addEventListener('click', (event) => {
+            if (event.target === badgeModal) {
+                closeBadgeImage();
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && !badgeModal.classList.contains('hidden')) {
+                closeBadgeImage();
+                badgeButton.focus();
+            }
         });
         
         // Close mobile menu when clicking a link
